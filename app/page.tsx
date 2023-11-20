@@ -1,5 +1,7 @@
+import Heading from "@/components/Heading";
+
 const HomePage: React.FC = () => {
-  return <div>First Page</div>;
+  return <Heading>Indie Gamer</Heading>;
 };
 
 export default HomePage;
