@@ -1,4 +1,5 @@
 import Heading from "@/components/Heading";
+import ShareLinkButton from "@/components/shareLinkButton";
 import { getReview, getSlugs } from "@/lib/reviews";
 import type { Metadata } from "next";
 
@@ -28,7 +29,10 @@ const ReviewPage = async ({ params: { slug } }: ReviewPageProps) => {
   return (
     <div>
       <Heading>{title}</Heading>
-      <p className="italic pb-2">{date}</p>
+      <div className="flex gap-3 items-baseline">
+        <p className="italic pb-2">{date}</p>
+        <ShareLinkButton />
+      </div>
       <img
         src={image}
         alt=""
