@@ -1,6 +1,14 @@
 import Link from "next/link";
 import Heading from "@/components/Heading";
-import { getReviews } from "@/lib/reviews";
+import { getReview, getReviews } from "@/lib/reviews";
+
+interface ReviewPageParams {
+  slug: string;
+}
+
+export const metadata = {
+  title: "Reviews",
+};
 
 const ReviewsPage: React.FC = async () => {
   const reviews = await getReviews();

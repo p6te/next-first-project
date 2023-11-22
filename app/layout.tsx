@@ -2,6 +2,12 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { orbitron, exo2 } from "./fonts";
+
+export const metadata = {
+  title: { default: "Indie Gamer", template: "%s | Indie Gamer" },
+  description: "Only the best indie games, reviewed for you.",
+};
+
 interface Props {
   children: ReactNode;
 }
