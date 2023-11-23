@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { orbitron, exo2 } from "./fonts";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: { default: "Indie Gamer", template: "%s | Indie Gamer" },
@@ -19,7 +20,10 @@ const RootLayout = ({ children }: Props) => {
         <header>
           <NavBar />
         </header>
-        <main className="grow py-3">{children}</main>
+        <main className="grow py-3">
+          {children}
+          <Analytics />
+        </main>
         <footer className="border-t py-3 text-center text-slate-500 text-xs">
           Game data and images courtesy of{" "}
           <a
