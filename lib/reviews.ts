@@ -1,6 +1,7 @@
 import matter from "gray-matter";
 import { marked } from "marked";
 import { readFile, readdir } from "node:fs/promises";
+import qs from "qs";
 
 export interface Review {
   slug: string;
@@ -21,15 +22,42 @@ export async function getReview(slug: string): Promise<Review> {
   return { title, image, date, body, slug };
 }
 
+type Data = {
+  id: string;
+  attributes: {
+    slug: string;
+    title: string;
+    subtitle: string;
+    publishedAt: string;
+    image: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        };
+      };
+    };
+  };
+}[];
 export async function getReviews(): Promise<Review[]> {
-  const slugs = await getSlugs();
-  const reviews: Review[] = [];
-  for (const slug of slugs) {
-    const review = await getReview(slug);
-    reviews.push(review);
-  }
-  reviews.sort((a, b) => b.date.localeCompare(a.date));
-  return reviews;
+  const url =
+    "http://localhost:1337/api/reviews?" +
+    qs.stringify(
+      {
+        fields: ["slug", "title", "subtitle", "publishedAt"],
+        populate: { image: { fields: ["url"] } },
+        sort: ["publishedAt:desc"],
+        pagination: { pageSize: 6 },
+      },
+      { encodeValuesOnly: true }
+    );
+  console.log("getReviews:", url);
+  const response = await fetch(url);
+  const { data: Data } = await response.json();
+  return data.map(({ attributes }) => ({
+    slug: attributes.slug,
+    title: attributes.title,
+  }));
 }
 
 export async function getSlugs(): Promise<string[]> {
