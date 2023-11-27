@@ -18,6 +18,7 @@ export async function generateStaticParams(): Promise<ReviewPageParams[]> {
 
 export async function generateMetadata({ params: { slug } }: ReviewPageProps) {
   const review = await getReview(slug);
+  console.log(review);
   return {
     title: review.title,
   };

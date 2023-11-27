@@ -12,6 +12,7 @@ export const metadata = {
 
 const ReviewsPage: React.FC = async () => {
   const reviews = await getReviews();
+
   return (
     <div>
       <Heading>Reviews</Heading>
