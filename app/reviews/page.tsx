@@ -2,17 +2,26 @@ import Link from "next/link";
 import Heading from "@/components/Heading";
 import { getReviews } from "@/lib/reviews";
 import Image from "next/image";
+import PaginationBar from "@/components/PaginationBar";
 
 export const metadata = {
   title: "Reviews",
 };
 
-const ReviewsPage: React.FC = async () => {
-  const reviews = await getReviews(6);
+const PAGE_SIZE = 6;
+
+interface ReviewsPageProps {
+  searchParams: { page?: string };
+}
+
+const ReviewsPage = async ({ searchParams }: ReviewsPageProps) => {
+  const page = parsePageParam(searchParams.page);
+  const { reviews, pageCount } = await getReviews(PAGE_SIZE, page);
 
   return (
     <div>
       <Heading>Reviews</Heading>
+      <PaginationBar href="/reviews" page={page} pageCount={pageCount} />
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review, index) => (
           <li
@@ -38,5 +47,15 @@ const ReviewsPage: React.FC = async () => {
     </div>
   );
 };
+
+function parsePageParam(paramValue?: string): number {
+  if (paramValue) {
+    const page = parseInt(paramValue);
+    if (isFinite(page) && page > 0) {
+      return page;
+    }
+  }
+  return 1;
+}
 
 export default ReviewsPage;

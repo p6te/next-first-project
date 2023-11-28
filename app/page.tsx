@@ -4,7 +4,7 @@ import Heading from "@/components/Heading";
 import { getReviews } from "@/lib/reviews";
 
 const HomePage: React.FC = async () => {
-  const reviews = await getReviews(3);
+  const { reviews } = await getReviews(3);
 
   return (
     <>
