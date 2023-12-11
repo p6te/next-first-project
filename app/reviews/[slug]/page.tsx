@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
+import { Suspense } from "react";
+import CommentListSkeleton from "@/components/CommentListSekeleton";
 
 interface ReviewPageParams {
   slug: string;
@@ -65,7 +67,9 @@ const ReviewPage = async ({ params: { slug } }: ReviewPageProps) => {
           Comments
         </h2>
         <CommentForm slug={slug} title={review.title} />
-        <CommentList slug={slug} />
+        <Suspense fallback={<CommentListSkeleton />}>
+          <CommentList slug={slug} />
+        </Suspense>
       </section>
     </div>
   );
