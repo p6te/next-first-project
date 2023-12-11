@@ -1,4 +1,4 @@
-import "server-only"; //checks if all requests are made form the server components
+import "server-only";
 
 import { marked } from "marked";
 import qs from "qs";
